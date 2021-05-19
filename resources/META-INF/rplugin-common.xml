@@ -142,6 +142,8 @@ You can find the source code in the following repositories:
     </actions>
 
     <actions>
+      <action id="org.jetbrains.r.actions.s4Analysis.RS4AnalysisFilterAction" class="org.jetbrains.r.actions.s4Analysis.RS4AnalysisFilterAction" />
+      <action id="org.jetbrains.r.actions.s4Analysis.RS4StatAction" class="org.jetbrains.r.actions.s4Analysis.RS4StatAction" />
       <action id="org.jetbrains.r.actions.REditorHelpAction" class="org.jetbrains.r.actions.REditorHelpAction"
               icon="AllIcons.Actions.Help" >
         <keyboard-shortcut keymap="$default" first-keystroke="F1" replace-all="true"/>
