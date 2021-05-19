@@ -12,12 +12,17 @@ import com.intellij.psi.stubs.StubInputStream
 import com.intellij.psi.stubs.StubOutputStream
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.io.StringRef
+import org.jetbrains.r.classes.s4.extra.index.RS4GenericIndex
+import org.jetbrains.r.classes.s4.extra.index.RS4MethodsIndex
+import org.jetbrains.r.classes.s4.extra.isFunctionDeclaration
 import org.jetbrains.r.classes.s4.methods.RS4GenericOrMethodInfo
 import org.jetbrains.r.hints.parameterInfo.RExtraNamedArgumentsInfo
 import org.jetbrains.r.packages.LibrarySummary
-import org.jetbrains.r.packages.isFunctionDeclaration
 import org.jetbrains.r.psi.api.RAssignmentStatement
-import org.jetbrains.r.psi.stubs.*
+import org.jetbrains.r.psi.stubs.RAssignmentCompletionIndex
+import org.jetbrains.r.psi.stubs.RAssignmentNameIndex
+import org.jetbrains.r.psi.stubs.RInternalAssignmentCompletionIndex
+import org.jetbrains.r.psi.stubs.RStubElementType
 
 class RSkeletonAssignmentElementType : RStubElementType<RSkeletonAssignmentStub, RAssignmentStatement>("R bin assignment") {
   override fun createPsi(stub: RSkeletonAssignmentStub): RAssignmentStatement {

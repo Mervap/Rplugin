@@ -11,11 +11,11 @@ import com.intellij.psi.ElementManipulators
 import com.intellij.psi.PsiElementVisitor
 import org.jetbrains.r.RBundle
 import org.jetbrains.r.classes.s4.context.RS4ContextProvider
+import org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex
 import org.jetbrains.r.inspections.RInspection
 import org.jetbrains.r.psi.api.RStringLiteralExpression
 import org.jetbrains.r.psi.api.RVisitor
 import org.jetbrains.r.psi.references.RSearchScopeUtil
-import org.jetbrains.r.psi.stubs.RS4ClassNameIndex
 
 class UnknownS4ClassNameInspection : RInspection() {
   override fun getDisplayName() = RBundle.message("inspection.unknown.s4.class.name.name")

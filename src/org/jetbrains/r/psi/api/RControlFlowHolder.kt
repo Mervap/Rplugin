@@ -5,10 +5,10 @@
 package org.jetbrains.r.psi.api
 
 import com.intellij.codeInsight.controlflow.Instruction
+import org.jetbrains.r.classes.s4.extra.IncludedSources
 import org.jetbrains.r.psi.cfg.LocalAnalysisResult
 import org.jetbrains.r.psi.cfg.LocalVariableInfo
 import org.jetbrains.r.psi.cfg.RControlFlow
-import org.jetbrains.r.psi.references.IncludedSources
 
 interface RControlFlowHolder: RPsiElement {
   val controlFlow: RControlFlow

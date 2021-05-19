@@ -14,11 +14,11 @@ import com.intellij.psi.PsiManager
 import com.intellij.testFramework.ReadOnlyLightVirtualFile
 import org.jetbrains.r.RLanguage
 import org.jetbrains.r.classes.s4.classInfo.RS4ClassInfo
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpression
 import org.jetbrains.r.console.RConsoleRuntimeInfo
 import org.jetbrains.r.psi.api.RCallExpression
 import org.jetbrains.r.psi.api.RFile
 import org.jetbrains.r.rinterop.RInterop
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpression
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 

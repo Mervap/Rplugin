@@ -89,8 +89,8 @@
   implements("function_expression")="org.jetbrains.r.psi.api.RExpression"
   implements("named_argument")="org.jetbrains.r.psi.api.RExpression"
   implements("argument_list|subscription_expression")="org.jetbrains.r.psi.api.RArgumentHolder"
-  implements("assignment_statement")="org.jetbrains.r.psi.api.RS4GenericOrMethodHolder"
-  implements("call_expression")="org.jetbrains.r.psi.api.RS4GenericOrMethodHolder"
+  implements("assignment_statement")="org.jetbrains.r.classes.s4.extra.RS4GenericOrMethodHolder"
+  implements("call_expression")="org.jetbrains.r.classes.s4.extra.RS4GenericOrMethodHolder"
 
   generateTokenAccessors=false
 }
@@ -135,7 +135,7 @@ fake assignment_statement ::= {
 fake call_expression ::= {
   methods=[ getArgumentList getExpression getAssociatedS4ClassInfo ]
   extends="org.jetbrains.r.psi.impl.RCallExpressionBase"
-  stubClass="org.jetbrains.r.psi.stubs.RCallExpressionStub"
+  stubClass="org.jetbrains.r.classes.s4.extra.stubs.RCallExpressionStub"
   implements="org.jetbrains.r.psi.api.RExpression"
 }
 

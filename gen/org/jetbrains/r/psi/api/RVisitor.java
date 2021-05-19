@@ -5,6 +5,7 @@ import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiNameIdentifierOwner;
 import com.intellij.psi.PsiNamedElement;
+import org.jetbrains.r.classes.s4.extra.RS4GenericOrMethodHolder;
 
 public class RVisitor extends PsiElementVisitor {
 

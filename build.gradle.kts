@@ -39,6 +39,7 @@ buildscript {
 
 dependencies {
     testCompile("org.mockito:mockito-all:1.10.19")
+    testCompile("org.assertj:assertj-core:3.19.0")
     compile("com.google.protobuf:protobuf-java:$protobufVersion")
     compile("io.grpc:grpc-stub:$grpcVersion")
     compile("io.grpc:grpc-protobuf:$grpcVersion")

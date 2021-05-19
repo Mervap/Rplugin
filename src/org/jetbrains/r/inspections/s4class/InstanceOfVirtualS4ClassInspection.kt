@@ -9,13 +9,13 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import org.jetbrains.r.RBundle
+import org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex
 import org.jetbrains.r.inspections.RInspection
 import org.jetbrains.r.psi.api.RCallExpression
 import org.jetbrains.r.psi.api.RStringLiteralExpression
 import org.jetbrains.r.psi.api.RVisitor
 import org.jetbrains.r.psi.isFunctionFromLibrary
 import org.jetbrains.r.psi.references.RSearchScopeUtil
-import org.jetbrains.r.psi.stubs.RS4ClassNameIndex
 
 class InstanceOfVirtualS4ClassInspection : RInspection() {
   override fun getDisplayName() = RBundle.message("inspection.virtual.s4class.instance.name")

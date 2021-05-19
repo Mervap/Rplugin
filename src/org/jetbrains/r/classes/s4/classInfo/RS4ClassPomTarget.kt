@@ -14,7 +14,7 @@ import org.jetbrains.r.psi.RPomTarget
 import org.jetbrains.r.psi.api.RCallExpression
 import org.jetbrains.r.psi.api.RExpression
 import org.jetbrains.r.psi.api.RStringLiteralExpression
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpression
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpression
 
 data class RSkeletonS4SlotPomTarget(val setClass: RSkeletonCallExpression, private val name: String) : RPomTarget() {
   override fun navigateAsync(requestFocus: Boolean): Promise<Unit> {

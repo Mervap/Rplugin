@@ -5,10 +5,10 @@ package org.jetbrains.r.psi.impl
 
 import com.intellij.lang.ASTNode
 import com.intellij.psi.stubs.IStubElementType
+import org.jetbrains.r.classes.s4.extra.stubs.RCallExpressionStub
 import org.jetbrains.r.psi.RBaseElementImpl
 import org.jetbrains.r.psi.api.RExpression
 import org.jetbrains.r.psi.references.RReferenceBase
-import org.jetbrains.r.psi.stubs.RCallExpressionStub
 
 abstract class RCallExpressionBase : RBaseElementImpl<RCallExpressionStub>, RExpression {
   constructor(node: ASTNode) : super(node)

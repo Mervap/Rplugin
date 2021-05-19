@@ -4,6 +4,8 @@
 
 package org.jetbrains.r.skeleton.psi;
 
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpressionElementType;
+
 public interface RSkeletonElementTypes {
   RSkeletonAssignmentElementType R_SKELETON_ASSIGNMENT_STATEMENT = new RSkeletonAssignmentElementType();
   RSkeletonCallExpressionElementType R_SKELETON_CALL_EXPRESSION = new RSkeletonCallExpressionElementType();

@@ -7,6 +7,7 @@ package org.jetbrains.r.psi;
 
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.r.classes.s4.extra.stubs.RCallExpressionElementType;
 
 public final class RElementTypeFactory {
     private RElementTypeFactory() {

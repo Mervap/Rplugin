@@ -6,10 +6,10 @@ package org.jetbrains.r.skeleton.psi
 
 import com.intellij.psi.stubs.StubBase
 import com.intellij.psi.stubs.StubElement
+import org.jetbrains.r.classes.s4.extra.isFunctionDeclaration
 import org.jetbrains.r.classes.s4.methods.RS4GenericOrMethodInfo
 import org.jetbrains.r.hints.parameterInfo.RExtraNamedArgumentsInfo
 import org.jetbrains.r.packages.LibrarySummary
-import org.jetbrains.r.packages.isFunctionDeclaration
 import org.jetbrains.r.psi.api.RAssignmentStatement
 import org.jetbrains.r.psi.stubs.RAssignmentStub
 

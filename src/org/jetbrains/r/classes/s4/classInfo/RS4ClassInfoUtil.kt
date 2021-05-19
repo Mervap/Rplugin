@@ -15,8 +15,8 @@ import org.jetbrains.r.packages.RPackageProjectManager
 import org.jetbrains.r.psi.api.*
 import org.jetbrains.r.psi.isFunctionFromLibrarySoft
 import org.jetbrains.r.psi.references.RSearchScopeUtil
-import org.jetbrains.r.psi.stubs.RS4ClassNameIndex
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpression
+import org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpression
 
 sealed class RS4ClassDistance {
   abstract operator fun compareTo(other: RS4ClassDistance): Int

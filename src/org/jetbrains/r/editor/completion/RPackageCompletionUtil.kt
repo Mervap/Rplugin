@@ -13,13 +13,13 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.Processor
+import org.jetbrains.r.classes.s4.extra.RS4PackageCompletionUtil
 import org.jetbrains.r.console.runtimeInfo
 import org.jetbrains.r.interpreter.RInterpreterState
 import org.jetbrains.r.interpreter.RInterpreterStateManager
 import org.jetbrains.r.packages.build.RPackageBuildUtil
 import org.jetbrains.r.psi.stubs.RAssignmentCompletionIndex
 import org.jetbrains.r.psi.stubs.RInternalAssignmentCompletionIndex
-import org.jetbrains.r.psi.stubs.RS4GenericIndex
 
 object RPackageCompletionUtil {
 
@@ -112,9 +112,6 @@ object RPackageCompletionUtil {
       consumer(elementFactory.createGlobalLookupElement(assignment), assignment.containingFile.virtualFile)
       return@Processor true
     })
-    RS4GenericIndex.processAll(project, scope, Processor {
-      consumer(elementFactory.createS4GenericLookupElement(it), it.containingFile.virtualFile)
-      return@Processor true
-    })
+    RS4PackageCompletionUtil.processElementsFromIndex(project, scope, elementFactory, consumer)
   }
 }

@@ -23,6 +23,7 @@ import org.jetbrains.annotations.TestOnly
 import org.jetbrains.concurrency.AsyncPromise
 import org.jetbrains.concurrency.Promise
 import org.jetbrains.r.RBundle
+import org.jetbrains.r.classes.s4.extra.RS4SkeletonUtil
 import org.jetbrains.r.common.ExpiringList
 import org.jetbrains.r.common.emptyExpiringList
 import org.jetbrains.r.packages.RInstalledPackage
@@ -312,7 +313,7 @@ interface RInterpreterState {
     val dumbModeTask = object : DumbModeTask(rInterop) {
       override fun performInDumbMode(indicator: ProgressIndicator) {
         if (!project.isOpen || project.isDisposed) return
-        if (RSkeletonUtil.updateSkeletons(rInterop, indicator)) {
+        if (RS4SkeletonUtil.updateSkeletons(rInterop, indicator)) {
           invokeAndWaitIfNeeded { runWriteAction { refreshSkeletons() } }
           updateState().onSuccess {
             RInterpreterUtil.updateIndexableSet(project)

@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.jetbrains.r.parsing.RElementTypes.*;
 import org.jetbrains.r.psi.api.*;
 import org.jetbrains.r.classes.s4.classInfo.RS4ClassInfo;
-import org.jetbrains.r.psi.stubs.RCallExpressionStub;
+import org.jetbrains.r.classes.s4.extra.stubs.RCallExpressionStub;
 import com.intellij.psi.stubs.IStubElementType;
 
 public class RCallExpressionImpl extends RCallExpressionBase implements RCallExpression {

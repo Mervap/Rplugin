@@ -32,6 +32,7 @@ import com.intellij.util.io.exists
 import junit.framework.TestCase
 import org.jetbrains.concurrency.Promise
 import org.jetbrains.concurrency.isPending
+import org.jetbrains.r.classes.s4.extra.RS4SkeletonUtil
 import org.jetbrains.r.console.RConsoleView
 import org.jetbrains.r.interpreter.RInterpreterManager
 import org.jetbrains.r.interpreter.RInterpreterStateManager
@@ -203,7 +204,7 @@ abstract class RUsefulTestCase : BasePlatformTestCase() {
       val mockSkeletonPath = RSkeletonUtil.installedPackageToSkeletonPath(versionedSkeletonLibraryPath, mockInstalledPackage)
       packagesForTest.add(rPackage to mockSkeletonPath)
     }
-    RSkeletonUtil.generateSkeletons(packagesForTest, rInterop)
+    RS4SkeletonUtil.generateSkeletons(packagesForTest, rInterop)
   }
 
   private fun missingTestSkeletons(interpreterVersion: String): Set<String> {

@@ -12,14 +12,11 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.tree.TokenSet
 import org.jetbrains.r.RBundle
-import org.jetbrains.r.classes.s4.context.RS4ContextProvider
-import org.jetbrains.r.classes.s4.context.setClass.RS4SetClassClassNameContext
-import org.jetbrains.r.classes.s4.context.setClass.RS4SlotDeclarationContext
+import org.jetbrains.r.classes.s4.extra.RS4FindUsagesProvider
 import org.jetbrains.r.lexer.RLexer
 import org.jetbrains.r.packages.LibrarySummary
 import org.jetbrains.r.parsing.RElementTypes
 import org.jetbrains.r.parsing.RParserDefinition
-import org.jetbrains.r.psi.RPsiUtil
 import org.jetbrains.r.psi.api.*
 import org.jetbrains.r.skeleton.psi.RSkeletonAssignmentStatement
 
@@ -43,6 +40,9 @@ class RFindUsagesProvider : FindUsagesProvider {
 
 
   override fun getType(element: PsiElement): String {
+
+    RS4FindUsagesProvider.getType(element)?.let { return it }
+
     if (element is RAssignmentStatement) {
       getAssignmentType(element)?.let { return it }
     }
@@ -55,16 +55,6 @@ class RFindUsagesProvider : FindUsagesProvider {
       return RBundle.message("find.usages.parameter")
     }
 
-    if (element is RStringLiteralExpression &&
-        RS4ContextProvider.getS4Context(element, RS4SetClassClassNameContext::class) != null) {
-      return RBundle.message("find.usages.s4.class")
-    }
-
-    if (RPsiUtil.getNamedArgumentByNameIdentifier(element as RPsiElement) != null &&
-        RS4ContextProvider.getS4Context(element, RS4SlotDeclarationContext::class) != null) {
-      return RBundle.message("find.usages.s4.slot")
-    }
-
     return RBundle.message("find.usages.variable")
   }
 
@@ -72,8 +62,6 @@ class RFindUsagesProvider : FindUsagesProvider {
     if (assignment is RSkeletonAssignmentStatement) {
       return when (assignment.stub.type) {
         LibrarySummary.RLibrarySymbol.Type.FUNCTION -> RBundle.message("find.usages.function")
-        LibrarySummary.RLibrarySymbol.Type.S4GENERIC -> RBundle.message("find.usages.s4.generic")
-        LibrarySummary.RLibrarySymbol.Type.S4METHOD -> RBundle.message("find.usages.s4.method")
         LibrarySummary.RLibrarySymbol.Type.DATASET -> RBundle.message("find.usages.dataset")
         else -> null
       }

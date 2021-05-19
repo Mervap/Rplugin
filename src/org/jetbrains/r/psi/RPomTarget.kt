@@ -19,13 +19,13 @@ import org.jetbrains.concurrency.AsyncPromise
 import org.jetbrains.concurrency.Promise
 import org.jetbrains.r.RLanguage
 import org.jetbrains.r.classes.s4.classInfo.*
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpression
 import org.jetbrains.r.console.RConsoleManager
 import org.jetbrains.r.debugger.RDebuggerUtil
 import org.jetbrains.r.psi.api.*
 import org.jetbrains.r.rinterop.*
 import org.jetbrains.r.run.visualize.VisualizeTableHandler
 import org.jetbrains.r.skeleton.psi.RSkeletonAssignmentStatement
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpression
 
 private open class RPomTargetPsiElementImpl(pomTarget: PomTarget, project: Project): PomTargetPsiElementImpl(project, pomTarget), RPsiElement {
   override fun getLanguage(): Language = RLanguage.INSTANCE

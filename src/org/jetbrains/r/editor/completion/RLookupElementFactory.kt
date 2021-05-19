@@ -12,11 +12,11 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementPresentation
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.util.TextRange
-import org.jetbrains.r.classes.s4.methods.RS4MethodsUtil.associatedS4GenericInfo
-import org.jetbrains.r.hints.parameterInfo.RArgumentInfo
+import org.jetbrains.r.classes.s4.extra.RS4GenericOrMethodHolder
+import org.jetbrains.r.classes.s4.extra.RS4LookupElementFactory
 import org.jetbrains.r.packages.RPackage
 import org.jetbrains.r.psi.TableColumnInfo
-import org.jetbrains.r.psi.api.*
+import org.jetbrains.r.psi.api.RAssignmentStatement
 import org.jetbrains.r.refactoring.RNamesValidator
 import javax.swing.Icon
 import kotlin.math.min
@@ -93,32 +93,14 @@ class RLookupElementFactory(private val functionInsertHandler: RLookupElementIns
 
   fun createFunctionLookupElement(functionAssignment: RAssignmentStatement, isLocal: Boolean = false): LookupElement {
     return if (functionAssignment.name.startsWith("%")) createOperatorLookupElement(functionAssignment, isLocal)
-    else createFunctionLookupElement(functionAssignment.name, AllIcons.Nodes.Function,
-                                     functionAssignment.functionParameters, functionAssignment, isLocal)
+    else RS4LookupElementFactory.run {
+      functionInsertHandler.createFunctionLookupElement(functionAssignment.name, AllIcons.Nodes.Function,
+                                                        functionAssignment.functionParameters, functionAssignment, isLocal)
+    }
   }
 
   fun createS4GenericLookupElement(genericExpression: RS4GenericOrMethodHolder): LookupElement {
-    val functionParameters =
-      when (genericExpression) {
-        is RAssignmentStatement -> genericExpression.functionParameters
-        is RCallExpression -> {
-          when (val def = RArgumentInfo.getArgumentByName(genericExpression, "def")) {
-            is RFunctionExpression -> def.parameterList?.text
-            is RIdentifierExpression -> (def.reference.resolve() as? RAssignmentStatement)?.functionParameters
-            else -> null
-          }
-        }
-        else -> null
-      } ?: ""
-    val name = genericExpression.associatedS4GenericInfo!!.methodName
-    return createFunctionLookupElement(name, AllIcons.Nodes.Method, functionParameters, genericExpression, genericExpression is RCallExpression)
-  }
-
-  private fun createFunctionLookupElement(name: String, icon: Icon, functionParameters: String, def: RPsiElement, isLocal: Boolean = false): LookupElement {
-    val packageName = if (isLocal) null else RPackage.getOrCreateRPackageBySkeletonFile(def.containingFile)?.name
-    return createLookupElementWithGrouping(RLookupElement(name, false, icon, packageName, functionParameters),
-                                           functionInsertHandler.getInsertHandlerForFunctionCall(functionParameters),
-                                           if (isLocal) VARIABLE_GROUPING else GLOBAL_GROUPING)
+    return RS4LookupElementFactory.createS4GenericLookupElement(functionInsertHandler, genericExpression)
   }
 
   fun createNamespaceAccess(lookupString: String): LookupElement {

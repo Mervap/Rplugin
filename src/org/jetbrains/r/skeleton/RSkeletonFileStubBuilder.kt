@@ -8,21 +8,13 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.stubs.BinaryFileStubBuilder
 import com.intellij.psi.stubs.Stub
 import com.intellij.util.indexing.FileContent
-import org.jetbrains.r.classes.s4.classInfo.RS4ClassInfo
-import org.jetbrains.r.classes.s4.classInfo.RS4ClassSlot
-import org.jetbrains.r.classes.s4.classInfo.RS4SuperClass
-import org.jetbrains.r.classes.s4.methods.RS4GenericInfo
-import org.jetbrains.r.classes.s4.methods.RS4GenericSignature
-import org.jetbrains.r.classes.s4.methods.RS4MethodParameterInfo
-import org.jetbrains.r.classes.s4.methods.RS4RawMethodInfo
+import org.jetbrains.r.classes.s4.extra.RS4SkeletonFileStubBuilder
 import org.jetbrains.r.hints.parameterInfo.RExtraNamedArgumentsInfo
 import org.jetbrains.r.packages.LibrarySummary
-import org.jetbrains.r.packages.LibrarySummary.RLibrarySymbol.*
+import org.jetbrains.r.packages.LibrarySummary.RLibrarySymbol.RepresentationCase
 import org.jetbrains.r.parsing.RParserDefinition
 import org.jetbrains.r.skeleton.psi.RSkeletonAssignmentStub
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpressionStub
 import org.jetbrains.r.skeleton.psi.RSkeletonElementTypes.R_SKELETON_ASSIGNMENT_STATEMENT
-import org.jetbrains.r.skeleton.psi.RSkeletonElementTypes.R_SKELETON_CALL_EXPRESSION
 import org.jetbrains.r.skeleton.psi.RSkeletonFileStub
 import java.io.ByteArrayInputStream
 
@@ -37,35 +29,11 @@ class RSkeletonFileStubBuilder : BinaryFileStubBuilder {
     }
     for (symbol in binPackage.symbolsList) {
       if (symbol.representationCase == RepresentationCase.S4CLASSREPRESENTATION) {
-        val s4ClassRepresentation = symbol.s4ClassRepresentation
-        RSkeletonCallExpressionStub(skeletonFileStub,
-                                    R_SKELETON_CALL_EXPRESSION,
-                                    RS4ClassInfo(symbol.name,
-                                                 s4ClassRepresentation.packageName,
-                                                 s4ClassRepresentation.slotsList.map {
-                                                   RS4ClassSlot(it.name, it.type, it.declarationClass)
-                                                 },
-                                                 s4ClassRepresentation.superClassesList.map {
-                                                   RS4SuperClass(it.name, it.distance)
-                                                 },
-                                                 s4ClassRepresentation.isVirtual))
+        RS4SkeletonFileStubBuilder.buildStubForS4Class(skeletonFileStub, symbol)
       }
       else {
         val functionRepresentation = symbol.functionRepresentation
-        val (s4GenericOrMethodInfo, extraNamedArguments) =
-          when (symbol.type) {
-            Type.S4GENERIC -> {
-              val signature = functionRepresentation.s4GenericSignature.let { RS4GenericSignature(it.parametersList, it.valueClassesList, false) }
-              RS4GenericInfo(symbol.name, signature) to FunctionRepresentation.ExtraNamedArguments.getDefaultInstance()
-            }
-            Type.S4METHOD -> {
-              val methodsParameters = functionRepresentation.s4ParametersInfo.s4MethodParametersList.map {
-                RS4MethodParameterInfo(it.name, it.type)
-              }
-              RS4RawMethodInfo(symbol.name, methodsParameters) to FunctionRepresentation.ExtraNamedArguments.getDefaultInstance()
-            }
-            else -> null to functionRepresentation.extraNamedArguments
-          }
+        val (s4GenericOrMethodInfo, extraNamedArguments) = RS4SkeletonFileStubBuilder.getGenericInfoOrExtraArgs(symbol)
         RSkeletonAssignmentStub(skeletonFileStub,
                                 R_SKELETON_ASSIGNMENT_STATEMENT,
                                 symbol.name,

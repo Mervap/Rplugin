@@ -12,6 +12,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import org.jetbrains.annotations.Nls
 import org.jetbrains.r.RBundle
+import org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex
 import org.jetbrains.r.console.RConsoleRuntimeInfo
 import org.jetbrains.r.console.runtimeInfo
 import org.jetbrains.r.intentions.LoadPackageFix
@@ -20,7 +21,6 @@ import org.jetbrains.r.psi.api.*
 import org.jetbrains.r.psi.isFunctionFromLibrary
 import org.jetbrains.r.psi.references.RReferenceBase
 import org.jetbrains.r.psi.references.RSearchScopeUtil
-import org.jetbrains.r.psi.stubs.RS4ClassNameIndex
 
 class UnresolvedReferenceInspection : RInspection() {
 

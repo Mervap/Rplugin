@@ -9,9 +9,8 @@ import com.intellij.testFramework.UsefulTestCase
 import junit.framework.TestCase
 import org.jetbrains.r.console.RConsoleRuntimeInfoImpl
 import org.jetbrains.r.console.addRuntimeInfo
-import org.jetbrains.r.run.RProcessHandlerBaseTestCase
 
-class IdentifierCompletionTest : RProcessHandlerBaseTestCase() {
+class IdentifierCompletionTest : IdentifierBaseCompletionTest() {
 
   override fun setUp() {
     super.setUp()
@@ -372,18 +371,6 @@ class IdentifierCompletionTest : RProcessHandlerBaseTestCase() {
     """.trimIndent(), "digit1", "digit2", "digits", withRuntimeInfo = true)
   }
 
-  fun testLibS4Generic() {
-    doTest("sho<caret>", "show")
-  }
-
-  fun testUserS4Generic() {
-    doTest("""
-      setGeneric("myShow", "obj", function(obj) standartGeneric("myShow"))
-      setGeneric("myShow1", "obj1", function(obj1) standartGeneric("myShow1"))
-      mySho<caret>
-    """.trimIndent(), "myShow", "myShow1")
-  }
-
   fun testCompletionForLocalVariableNames() {
     doTest("""
       foo_oo <- 31312
@@ -529,21 +516,5 @@ class IdentifierCompletionTest : RProcessHandlerBaseTestCase() {
     assertNotNull(result)
     val lookupStrings = result.map { it.lookupString }
     UsefulTestCase.assertDoesntContain(lookupStrings, *variants)
-  }
-
-  private fun doTest(text: String, vararg variants: String, strict: Boolean = false, withRuntimeInfo: Boolean = false) {
-    myFixture.configureByText("foo.R", text)
-    if (withRuntimeInfo) {
-      myFixture.file.addRuntimeInfo(RConsoleRuntimeInfoImpl(rInterop))
-    }
-    val result = myFixture.completeBasic()
-    assertNotNull(result)
-    val lookupStrings = result.map { it.lookupString }
-    if (strict) {
-      assertOrderedEquals(lookupStrings, *variants)
-    }
-    else {
-      assertContainsOrdered(lookupStrings, *variants)
-    }
   }
 }

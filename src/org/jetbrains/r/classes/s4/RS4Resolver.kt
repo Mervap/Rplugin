@@ -15,6 +15,10 @@ import org.jetbrains.r.classes.s4.classInfo.RS4InfDistance
 import org.jetbrains.r.classes.s4.classInfo.RS4OrdDistance
 import org.jetbrains.r.classes.s4.context.RS4ContextProvider
 import org.jetbrains.r.classes.s4.context.RS4NewObjectSlotNameContext
+import org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex
+import org.jetbrains.r.classes.s4.extra.index.RS4GenericIndex
+import org.jetbrains.r.classes.s4.extra.index.RS4MethodsIndex
+import org.jetbrains.r.classes.s4.extra.stubs.RSkeletonCallExpression
 import org.jetbrains.r.classes.s4.methods.RS4MethodsUtil.associatedS4GenericInfo
 import org.jetbrains.r.classes.s4.methods.RS4MethodsUtil.associatedS4MethodInfo
 import org.jetbrains.r.classes.s4.methods.RS4MethodsUtil.methodName
@@ -28,10 +32,6 @@ import org.jetbrains.r.psi.api.RCallExpression
 import org.jetbrains.r.psi.api.RPsiElement
 import org.jetbrains.r.psi.api.RStringLiteralExpression
 import org.jetbrains.r.psi.references.RSearchScopeUtil
-import org.jetbrains.r.psi.stubs.RS4ClassNameIndex
-import org.jetbrains.r.psi.stubs.RS4GenericIndex
-import org.jetbrains.r.psi.stubs.RS4MethodsIndex
-import org.jetbrains.r.skeleton.psi.RSkeletonCallExpression
 
 object RS4Resolver {
 

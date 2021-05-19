@@ -17,14 +17,14 @@ import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.util.Processor
 import org.jetbrains.r.RFileType
+import org.jetbrains.r.classes.s4.extra.IncludedSources
+import org.jetbrains.r.classes.s4.extra.analyseIncludedSources
 import org.jetbrains.r.psi.api.RCallExpression
 import org.jetbrains.r.psi.api.RFile
 import org.jetbrains.r.psi.cfg.LocalAnalysisResult
 import org.jetbrains.r.psi.cfg.RControlFlow
 import org.jetbrains.r.psi.cfg.analyzeLocals
 import org.jetbrains.r.psi.cfg.buildControlFlow
-import org.jetbrains.r.psi.references.IncludedSources
-import org.jetbrains.r.psi.references.analyseIncludedSources
 import java.util.*
 
 

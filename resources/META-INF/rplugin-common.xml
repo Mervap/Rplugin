@@ -372,7 +372,7 @@ You can find the source code in the following repositories:
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.elementManipulator forClass="org.jetbrains.r.psi.api.RStringLiteralExpression"
-                                 implementationClass="org.jetbrains.r.psi.impl.RStringLiteralManipulator"/>
+                                 implementationClass="org.jetbrains.r.classes.s4.extra.RStringLiteralManipulator"/>
         <additionalTextAttributes scheme="Default" file="colorSchemes/RMarkdownChunkDefault.xml"/>
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/RMarkdownChunkDarcula.xml"/>
         <additionalTextAttributes scheme="Default" file="colorSchemes/RLanguageDefault.xml"/>
@@ -440,9 +440,9 @@ You can find the source code in the following repositories:
         <stubIndex implementation="org.jetbrains.r.psi.stubs.RAssignmentNameIndex"/>
         <stubIndex implementation="org.jetbrains.r.psi.stubs.RAssignmentCompletionIndex"/>
         <stubIndex implementation="org.jetbrains.r.psi.stubs.RInternalAssignmentCompletionIndex"/>
-        <stubIndex implementation="org.jetbrains.r.psi.stubs.RS4ClassNameIndex"/>
-        <stubIndex implementation="org.jetbrains.r.psi.stubs.RS4GenericIndex"/>
-        <stubIndex implementation="org.jetbrains.r.psi.stubs.RS4MethodsIndex"/>
+        <stubIndex implementation="org.jetbrains.r.classes.s4.extra.index.RS4ClassNameIndex"/>
+        <stubIndex implementation="org.jetbrains.r.classes.s4.extra.index.RS4GenericIndex"/>
+        <stubIndex implementation="org.jetbrains.r.classes.s4.extra.index.RS4MethodsIndex"/>
         <stubElementTypeHolder class="org.jetbrains.r.parsing.RElementTypes"/>
 
         <lang.commenter language="R" implementationClass="org.jetbrains.r.editor.RCommenter"/>
@@ -591,8 +591,8 @@ You can find the source code in the following repositories:
         <renameInputValidator implementation="org.jetbrains.r.refactoring.rename.RRenameInputValidator"/>
         <nameSuggestionProvider implementation="org.jetbrains.r.refactoring.rename.RNameSuggestionProvider"/>
         <renameHandler implementation="org.jetbrains.r.refactoring.rename.RMemberInplaceRenameHandler"/>
-        <renameHandler implementation="org.jetbrains.r.refactoring.rename.RVariableInplaceRenameHandler"/>
-        <renamePsiElementProcessor implementation="org.jetbrains.r.refactoring.rename.RenameRPsiElementProcessor"
+        <renameHandler implementation="org.jetbrains.r.classes.s4.extra.rename.RVariableInplaceRenameHandler"/>
+        <renamePsiElementProcessor implementation="org.jetbrains.r.classes.s4.extra.rename.RenameRPsiElementProcessor"
                                  id="RPsiElement"
                                  order="first"/>
 

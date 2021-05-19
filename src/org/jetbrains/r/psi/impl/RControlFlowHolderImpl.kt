@@ -9,6 +9,8 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.psi.util.PsiTreeUtil
+import org.jetbrains.r.classes.s4.extra.IncludedSources
+import org.jetbrains.r.classes.s4.extra.analyseIncludedSources
 import org.jetbrains.r.psi.RElementImpl
 import org.jetbrains.r.psi.api.RControlFlowHolder
 import org.jetbrains.r.psi.api.RFunctionExpression
@@ -16,8 +18,6 @@ import org.jetbrains.r.psi.cfg.LocalAnalysisResult
 import org.jetbrains.r.psi.cfg.RControlFlow
 import org.jetbrains.r.psi.cfg.analyzeLocals
 import org.jetbrains.r.psi.cfg.buildControlFlow
-import org.jetbrains.r.psi.references.IncludedSources
-import org.jetbrains.r.psi.references.analyseIncludedSources
 
 abstract class RControlFlowHolderImpl(astNode: ASTNode) : RElementImpl(astNode), RControlFlowHolder {
   override val controlFlow: RControlFlow
