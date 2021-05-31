@@ -15,13 +15,19 @@ class MissingS4ClassNameInspectionTest : RInspectionTest() {
     addLibraries()
   }
 
-  fun testSlots() {
+  fun testSlots1() {
     doExprTest("setClass('MyClass', slots = list(name = 'character', age = $errorStr))")
+  }
+
+  fun testSlots2() {
     doExprTest("setClass('MyClass', slots = c(field = c('character', age = $errorStr)))")
   }
 
-  fun testContains() {
+  fun testContains1() {
     doExprTest("setClass('MyClass', contains = $errorStr)")
+  }
+
+  fun testContains2() {
     doExprTest("setClass('MyClass', contains = 'numeric')")
   }
 

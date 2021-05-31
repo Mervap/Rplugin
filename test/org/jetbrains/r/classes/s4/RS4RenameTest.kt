@@ -29,9 +29,9 @@ class RS4RenameTest : RRenameBaseTest() {
 
   fun testRenameLibS4Slot() = doTestWithProject("source", false)
 
-  fun testRenameS4Generic() = doTestWithProject("bar", false)
+  fun testRenameS4Generic() = doTestWithProject("bar")
 
-  fun testRenameS4GenericFromMethod() = doTestWithProject("bar", false)
+  fun testRenameS4GenericFromMethod() = doTestWithProject("bar")
 
-  fun testRenameS4GenericFromMethodDeclaration() = doTestWithProject("bar", false)
+  fun testRenameS4GenericFromMethodDeclaration() = doTestWithProject("bar")
 }

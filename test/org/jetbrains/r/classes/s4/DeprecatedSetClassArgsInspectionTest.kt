@@ -51,11 +51,14 @@ class DeprecatedSetClassArgsInspectionTest : RInspectionTest() {
     """.trimIndent(), true)
   }
 
-  fun testNoWarnings() {
+  fun testNoWarnings1() {
     doExprTest("""
       setClass('MyClass', slots = c(aa = "aaType", bb = "bbType"), contains = c("matrix", "VIRTUAL"))
     """.trimIndent(), true)
 
+  }
+
+  fun testNoWarnings2() {
     // REmptyExpression
     doExprTest("""
       setClass('MyClass', )

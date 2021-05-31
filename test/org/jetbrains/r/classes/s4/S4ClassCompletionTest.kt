@@ -53,13 +53,15 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     """.trimIndent(), "slot_n1" to "ANY", "some_slot.n2" to "ANY")
   }
 
-  fun testUserClassWithRepresentation() {
+  fun testUserClassWithRepresentation1() {
     doTest("""
       setClass('MyClass', representation = representation(mySlot = "character"))
       obj <- new('MyClass')
       obj@<caret>
     """.trimIndent(), "mySlot" to "character")
+  }
 
+  fun testUserClassWithRepresentation2() {
     doTest("""
       setClass('MyClass', representation = list(mySlot = "character"))
       obj <- new('MyClass')
@@ -140,51 +142,81 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     """.trimIndent(), "gpa" to "numeric", "name" to "character")
   }
 
-  fun testImplicitDataSlot() {
-    fun doDataSlotTest(className: String) {
-      doTest("""
+  // methods:::.classTable[["character"]]@slots is empty
+  private fun doDataSlotTest(className: String) {
+    doTest("""
       setClass('MyClass', contains = "$className")
       obj <- new('MyClass')
       obj@<caret>
     """.trimIndent(), ".Data" to className, strict = false)
-    }
+  }
 
-    // methods:::.classTable[["character"]]@slots is empty
+  fun testImplicitDataSlot1() {
     doDataSlotTest("character")
+  }
+
+  fun testImplicitDataSlot2() {
     doDataSlotTest("S4")
+  }
+
+  fun testImplicitDataSlot3() {
     doDataSlotTest("integer")
+  }
+
+  fun testImplicitDataSlot4() {
     doDataSlotTest("ANY")
   }
 
-  fun testImplicitXDataSlot() {
-    fun doXDataSlotTest(className: String) {
-      doTest("""
+  // methods:::.classTable[["environment"]]@slots is empty
+  private fun doXDataSlotTest(className: String) {
+    doTest("""
       setClass('MyClass', contains = "$className")
       obj <- new('MyClass')
       obj@<caret>
     """.trimIndent(), ".xData" to className, strict = false)
-    }
+  }
 
-    // methods:::.classTable[["environment"]]@slots is empty
+  fun testImplicitXDataSlot1() {
     doXDataSlotTest("environment")
+  }
+
+  fun testImplicitXDataSlot2() {
     doXDataSlotTest("externalptr")
+  }
+
+  fun testImplicitXDataSlot3() {
     doXDataSlotTest("name")
+  }
+
+  fun testImplicitXDataSlot4() {
     doXDataSlotTest("NULL")
   }
 
-  fun testImplicitDataSlotInhVector() {
-    fun doDataSlotInhVectorTest(className: String, classSlot: String) {
-      doTest("""
+  private fun doDataSlotInhVectorTest(className: String, classSlot: String) {
+    doTest("""
       setClass('MyClass', contains = "$className")
       obj <- new('MyClass')
       obj@<caret>
     """.trimIndent(), ".Data" to classSlot, strict = false)
-    }
+  }
 
+  fun testImplicitDataSlotInhVector1() {
     doDataSlotInhVectorTest("vector", "vector")
+  }
+
+  fun testImplicitDataSlotInhVector2() {
     doDataSlotInhVectorTest("matrix", "matrix")
+  }
+
+  fun testImplicitDataSlotInhVector3() {
     doDataSlotInhVectorTest("data.frame", "list")
+  }
+
+  fun testImplicitDataSlotInhVector4() {
     doDataSlotInhVectorTest("ts", "vector")
+  }
+
+  fun testImplicitDataSlotInhVector5() {
     doDataSlotInhVectorTest("factor", "integer")
   }
 
@@ -202,69 +234,116 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     """.trimIndent(), "MyClass1" to "foo.R", "MyClass2" to "foo.R")
   }
 
-  fun testVirtualClassName() {
+  fun testVirtualClassName1() {
     doWrongVariantsTest("new('tb<caret>')", "tbl", "tbl_df")
+  }
+
+  fun testVirtualClassName2() {
     doWrongVariantsTest("new('POSIX<caret>')", "POSIXct", "POSIXlt", "POSIXt")
+  }
+
+  fun testVirtualClassName3() {
     doWrongVariantsTest("""
       setClass('MyVirtual', contains = "VIRTUAL")
       new('My<caret>')
     """.trimIndent(), "MyVirtual")
   }
 
-  fun testClassNameAsSlotType() {
+  fun testClassNameAsSlotType1() {
     val variants = listOf("POSIXct", "POSIXlt", "POSIXt").map { it to "methods" }
     doTest("setClass('MyClass', slots = c(slot = 'POSIX<caret>'))", *variants.toTypedArray())
+  }
+
+  fun testClassNameAsSlotType2() {
     doTest("""
       setClass('MyClass1')
       setClass('MyClass2')
       setClass('MyClass3', slots = c(slot = 'My<caret>'))
     """.trimIndent(), "MyClass1" to "foo.R", "MyClass2" to "foo.R")
+  }
+
+  fun testClassNameAsSlotType3() {
     doWrongVariantsTest("setClass('MyClass', slots = c('POSIX<caret>'))", "POSIXct", "POSIXlt", "POSIXt")
+  }
+
+  fun testClassNameAsSlotType4() {
     doWrongVariantsTest("setClass('MyClass', slots = c('POSIX<caret>' = 'character'))", "POSIXct", "POSIXlt", "POSIXt")
+  }
+
+  fun testClassNameAsSlotType5() {
     doWrongVariantsTest("setClass('MyClass', slot = 'class<caret>')",
                         "classGeneratorFunction", "className", "classPrototypeDef", "classRepresentation")
   }
 
-  fun testClassNameAsSuperClass() {
+  fun testClassNameAsSuperClass1() {
     val variants = listOf("POSIXct", "POSIXlt", "POSIXt").map { it to "methods" }.toTypedArray()
     doTest("setClass('MyClass', contains = 'POSIX<caret>')", *variants)
+  }
+
+  fun testClassNameAsSuperClass2() {
+    val variants = listOf("POSIXct", "POSIXlt", "POSIXt").map { it to "methods" }.toTypedArray()
     doTest("setClass('MyClass', contains = c(aaa = 'POSIX<caret>'))", *variants)
+  }
+
+  fun testClassNameAsSuperClass3() {
     doTest("""
       setClass('MyClass1')
       setClass('MyClass2')
       setClass('MyClass3', contains = c('My<caret>'))
     """.trimIndent(), "MyClass1" to "foo.R", "MyClass2" to "foo.R")
+  }
+
+  fun testClassNameAsSuperClass4() {
     doWrongVariantsTest("setClass('MyClass', contains = c('class<caret>' = 'character'))",
                         "classGeneratorFunction", "className", "classPrototypeDef", "classRepresentation")
   }
 
-  fun testClassNameAsRepresentation() {
+  fun testClassNameAsRepresentation1() {
     val variants = listOf("POSIXct", "POSIXlt", "POSIXt").map { it to "methods" }.toTypedArray()
     doTest("setClass('MyClass', representation = representation('POSIX<caret>'))", *variants)
+  }
+
+  fun testClassNameAsRepresentation2() {
+    val variants = listOf("POSIXct", "POSIXlt", "POSIXt").map { it to "methods" }.toTypedArray()
     doTest("setClass('MyClass', representation = list(aaa = 'POSIX<caret>'))", *variants)
+  }
+
+  fun testClassNameAsRepresentation3() {
     doTest("""
       setClass('MyClass1')
       setClass('MyClass2')
       setClass('MyClass3', 'My<caret>')
     """.trimIndent(), "MyClass1" to "foo.R", "MyClass2" to "foo.R")
+  }
+
+  fun testClassNameAsRepresentation4() {
     doWrongVariantsTest("setClass('MyClass', representation = representation('class<caret>' = 'character'))",
                         "classGeneratorFunction", "className", "classPrototypeDef", "classRepresentation")
   }
 
-  fun testClassNameWithoutQuotes() {
+  fun testClassNameWithoutQuotes1() {
     val variants =
       listOf("classGeneratorFunction", "className", "classPrototypeDef", "classRepresentation").map { "\"$it\"" to "methods" }
     doTest("new(class<caret>)", *variants.toTypedArray(), strict = false)
+  }
+
+  fun testClassNameWithoutQuotes2() {
     doTest("""
       setClass('MyClass1')
       setClass('MyClass2')
       setClass('MyClass3', contains = MyC<caret>)
     """.trimIndent(), "\"MyClass1\"" to "foo.R", "\"MyClass2\"" to "foo.R", strict = false)
+  }
+
+  fun testClassNameWithoutQuotes3() {
     doTest("""
       setClass('MyClass1')
       setClass('MyClass2')
       setClass('MyClass3', representation = representation(MyC<caret>))
     """.trimIndent(), "\"MyClass1\"" to "foo.R", "\"MyClass2\"" to "foo.R", strict = false)
+  }
+
+  fun testClassNameWithoutQuotes4() {
     doTest("""
       setClass('Test', slots = c(name = 'numeric'))
       new_test <- new(Tes<caret>)
@@ -356,21 +435,29 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     doTest("new('My<caret>')'", "MyClass" to ".GlobalEnv", "MyClass1" to ".GlobalEnv", withRuntimeInfo = true)
   }
 
-  fun testSlotInNew() {
+  fun testSlotInNew1() {
     doTest("""
       setClass("Person", slots = c(person_xxx_name = "character", person_xxx_age = "<-"))
       new("Person", person_xxx_<caret>)
     """.trimIndent(), "person_xxx_age" to "<-", "person_xxx_name" to "character")
+  }
+
+  fun testSlotInNew2() {
     doTest("""
       setClass('MyClass1', slots = c(class_xxx_id = "numeric"))
       setClass('MyClass2', contains = "MyClass1", slots = c(class_xxx_no = "character"))
       new('MyClass2', class_xxx_<caret>)
     """.trimIndent(), "class_xxx_id" to "numeric", "class_xxx_no" to "character")
+  }
 
+  fun testSlotInNew3() {
     doWrongVariantsTest("""
       setClass("Person", slots = c(person_name = "character", person_age = "<-"))
       new(person_<caret>)
     """.trimIndent(), "person_age", "person_name")
+  }
+
+  fun testSlotInNew4() {
     doWrongVariantsTest("""
       setClass("Person", slots = c(person_name = "character", person_age = "<-"))
       new("Person", person_age = person_<caret>)
@@ -398,17 +485,23 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     """.trimIndent(), "MyClass", "MyClass1")
   }
 
-  fun testSetMethodsParamTypes() {
+  fun testSetMethodsParamTypes1() {
     doTest("""
       setClass('MyClass')
       setClass('MyClass1')
       setMethod('Foo', c('MyCla<caret>'))
     """.trimIndent(), "MyClass" to "foo.R", "MyClass1" to "foo.R")
+  }
+
+  fun testSetMethodsParamTypes2() {
     doTest("""
       setClass('MyClass')
       setClass('MyClass1')
       setMethod('Foo', c(obj = 'MyCla<caret>'))
     """.trimIndent(), "MyClass" to "foo.R", "MyClass1" to "foo.R")
+  }
+
+  fun testSetMethodsParamTypes3() {
     doWrongVariantsTest("""
       setClass('MyClass')
       setClass('MyClass1')
@@ -487,8 +580,7 @@ class S4ClassCompletionTest : RProcessHandlerBaseTestCase() {
     }
     if (strict) {
       assertOrderedEquals(lookupStrings, *variants)
-    }
-    else {
+    } else {
       assertContainsOrdered(lookupStrings, *variants)
     }
   }

@@ -195,30 +195,44 @@ class RS4ClassResolveTest : RConsoleBaseTestCase() {
       listOf("p2 = 'character'", "'numeric'")
     )
 
-  fun testMethodsDistance() {
-    fun doInnerTest(text: String, matchingSignature: List<String>?) {
-      doMethodTest(
-        2,
-        listOf(
-          listOf("'A'", "'A'"),
-          listOf("'A'", "'B'"),
-          listOf("'D'", "'A'"),
-          listOf("'B'", "'B'")
-        ),
-        """
+  private fun doInnerTest(text: String, matchingSignature: List<String>?) {
+    doMethodTest(
+      2,
+      listOf(
+        listOf("'A'", "'A'"),
+        listOf("'A'", "'B'"),
+        listOf("'D'", "'A'"),
+        listOf("'B'", "'B'")
+      ),
+      """
         setClass('A')
         setClass('B', contains = 'A')
         setClass('C', contains = 'B')
         setClass('D', contains = 'C')
         $text
       """.trimIndent(),
-        matchingSignature
-      )
-    }
+      matchingSignature
+    )
+  }
+
+
+  fun testMethodsDistance1() {
     doInnerTest("fo<caret>o(new('A'), new('A'))", listOf("'A'", "'A'"))
+  }
+
+  fun testMethodsDistance2() {
     doInnerTest("fo<caret>o(new('D'), new('B'))", listOf("'D'", "'A'"))
+  }
+
+  fun testMethodsDistance3() {
     doInnerTest("fo<caret>o(new('C'), new('C'))", listOf("'B'", "'B'"))
+  }
+
+  fun testMethodsDistance4() {
     doInnerTest("fo<caret>o(new('C'), new('D'))", listOf("'B'", "'B'"))
+  }
+
+  fun testMethodsDistance5() {
     doInnerTest("fo<caret>o(new('A'), new('D'))", listOf("'A'", "'B'"))
   }
 
@@ -281,8 +295,7 @@ class RS4ClassResolveTest : RConsoleBaseTestCase() {
         }
         else -> error("Unexpected resolve type: $result")
       }
-    }
-    else {
+    } else {
       val (decl, slotName) = when (result) {
         is PomTargetPsiElement -> {
           val target = result.target
@@ -313,8 +326,7 @@ class RS4ClassResolveTest : RConsoleBaseTestCase() {
       val target = (result as PomTargetPsiElement).target
       assertInstanceOf(target, RStringLiteralPomTarget::class.java)
       assertEquals(getDeclarationWithClassName(className).classNameLiteral, (target as RStringLiteralPomTarget).literal)
-    }
-    else {
+    } else {
       assertInstanceOf(result, PomTargetPsiElement::class.java)
       val declText = when (val target = (result as PomTargetPsiElement).target) {
         is RStringLiteralPomTarget -> {

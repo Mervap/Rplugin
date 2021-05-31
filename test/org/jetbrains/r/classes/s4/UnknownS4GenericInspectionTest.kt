@@ -15,13 +15,19 @@ class UnknownS4GenericInspectionTest : RInspectionTest() {
     addLibraries()
   }
 
-  fun testSetMethod() {
+  fun testSetMethod1() {
     doExprTest("setMethod(${makeError("foo")})")
+  }
+
+  fun testSetMethod2() {
     doExprTest("setMethod(${makeError("sho")})")
   }
 
-  fun testCorrect() {
+  fun testCorrect1() {
     doExprTest("setMethod('show')")
+  }
+
+  fun testCorrect2() {
     doExprTest("""
       setGeneric('foo')
       setMethod('foo')
